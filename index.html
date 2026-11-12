@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3b6ef5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ekspedisi IPB">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Ekspedisi IPB</title>
+<style>
+:root{--bg1:#e4ecff;--bg2:#f4e6ff;--g1:rgba(122,168,255,.55);--g2:rgba(255,154,213,.45);--glass:rgba(255,255,255,.66);--gb:rgba(255,255,255,.85);--sh:0 4px 16px rgba(40,60,120,.10);--tx:#14181f;--mut:#566071;--opt:#fff;--pri:#3b6ef5;--pri2:#7a4df0;--ok:#0f7a55;--okbg:rgba(34,197,130,.2);--warn:#9a5a00;--warnbg:rgba(250,176,5,.24);--idle:#475569;--idlebg:rgba(100,116,139,.16);--dan:#d32f2f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0a0f1f;--bg2:#1b1235;--g1:rgba(47,91,216,.45);--g2:rgba(162,41,154,.35);--glass:rgba(255,255,255,.07);--gb:rgba(255,255,255,.14);--sh:0 4px 16px rgba(0,0,0,.35);--tx:#eef1f6;--mut:#9aa5b8;--opt:#1a2030;--pri:#5b8bff;--pri2:#9a6bff;--ok:#6ee7b7;--okbg:rgba(52,211,153,.16);--warn:#fbd38d;--warnbg:rgba(251,191,36,.16);--idle:#cbd5e1;--idlebg:rgba(148,163,184,.16);--dan:#ff8a80;}}
+:root[data-theme="dark"]{--bg1:#0a0f1f;--bg2:#1b1235;--g1:rgba(47,91,216,.45);--g2:rgba(162,41,154,.35);--glass:rgba(255,255,255,.07);--gb:rgba(255,255,255,.14);--sh:0 4px 16px rgba(0,0,0,.35);--tx:#eef1f6;--mut:#9aa5b8;--opt:#1a2030;--pri:#5b8bff;--pri2:#9a6bff;--ok:#6ee7b7;--okbg:rgba(52,211,153,.16);--warn:#fbd38d;--warnbg:rgba(251,191,36,.16);--idle:#cbd5e1;--idlebg:rgba(148,163,184,.16);--dan:#ff8a80;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:linear-gradient(135deg,var(--bg1),var(--bg2))}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60vmax 60vmax at 0% 0%,var(--g1),transparent 70%),radial-gradient(60vmax 60vmax at 100% 100%,var(--g2),transparent 70%)}
+main{max-width:720px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:18px;margin:0;letter-spacing:-.01em;line-height:1.2}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;background:linear-gradient(135deg,var(--pri),var(--pri2));flex:none}
+.sub{font-size:12px;color:var(--mut)}
+.hd,.card,input,select,.tabs button{background-color:var(--glass);border:1px solid var(--gb)}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 14px;padding:12px 14px;border-radius:18px;box-shadow:var(--sh)}
+.hb{display:flex;gap:8px}
+.card{border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--sh)}
+label{display:block;font-size:12px;color:var(--mut);margin:12px 0 5px;font-weight:600}
+input,select{width:100%;padding:11px 12px;border-radius:12px;color:var(--tx);font:inherit;outline:none}
+input:focus,select:focus{border-color:var(--pri)}
+input::placeholder{color:var(--mut);opacity:.8}
+option{background:var(--opt);color:var(--tx)}
+button{font:inherit;border:0;border-radius:12px;padding:10px 16px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--pri),var(--pri2))}
+button:active{transform:scale(.97)}
+button.s{padding:7px 12px;font-size:13px}
+button.g{background:var(--glass);color:var(--tx);border:1px solid var(--gb)}
+button.ic{padding:10px 12px}
+button.out{background:linear-gradient(135deg,#f59e0b,#ea580c)}
+button.ret{background:linear-gradient(135deg,#22c55e,#15803d)}
+button.dir{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+button.d{background:transparent;color:var(--dan);border:1px solid var(--dan);padding:6px 10px;font-size:13px}
+.flt{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.flt input{grid-column:1/-1}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:14px;background-color:var(--glass);border:1px solid var(--gb);margin-bottom:4px}
+.tabs button{background:transparent;border:0;color:var(--mut);border-radius:10px;padding:8px 4px;font-size:12px;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.tabs button b{font-size:17px;color:var(--tx)}
+.tabs button.on{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff}
+.tabs button.on b{color:#fff}
+button.dng{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.item{display:flex;flex-direction:column;gap:6px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.no{font-weight:700;font-size:16px}
+.badge{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid currentColor;font-weight:600}
+.b0{background:var(--idlebg);color:var(--idle)}.b1{background:var(--warnbg);color:var(--warn)}.b2{background:var(--okbg);color:var(--ok)}
+.meta{color:var(--mut);font-size:13px}
+.act{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.empty{text-align:center;color:var(--mut);padding:28px}
+.gh{font-weight:700;font-size:12px;color:var(--mut);margin:18px 4px 8px;text-transform:uppercase;letter-spacing:.08em}
+.c0{border-left:5px solid var(--idle)}
+.c1{background-image:linear-gradient(var(--warnbg),var(--warnbg));border-left:5px solid var(--warn)}
+.c2{background-image:linear-gradient(var(--okbg),var(--okbg));border-left:5px solid var(--ok)}
+.ov{display:none;position:fixed;inset:0;background:rgba(10,15,30,.5);z-index:20;align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+.ov.show{display:flex}
+.md{width:100%;max-width:440px;margin:0;padding:20px;border-radius:22px;background:var(--opt)}
+.md h2{margin:0 0 4px;font-size:19px}
+.btns{display:flex;gap:10px;margin-top:18px}.btns button{flex:1}
+.err{color:var(--dan);font-size:13px;min-height:18px;margin-top:8px}
+</style>
+</head>
+<body>
+<main>
+<div class="hd"><div class="brand"><div class="logo">📦</div><div><h1>Ekspedisi IPB</h1><div class="sub">Catat keluar &amp; kembali</div></div></div><div class="hb"><button class="g ic" id="theme" aria-label="Ganti tema">🌙</button><button id="open">+ Tambah</button></div></div>
+<div class="meta" id="net" style="margin:0 4px 8px"></div>
+<div class="flt">
+  <input id="q" placeholder="Cari no. IPB, unit, atau pengawas…">
+  <select id="fm"></select>
+  <select id="fy"></select>
+</div>
+<div class="tabs" id="tabs"></div>
+<div id="list"></div>
+</main>
+
+<div class="ov" id="ov">
+  <div class="card md">
+    <h2>Tambah IPB</h2>
+    <label for="no">No. IPB</label><input id="no" placeholder="mis. IPB-001">
+    <label for="tgl">Tanggal</label><input id="tgl" type="date">
+    <label for="unit">Unit</label><input id="unit" placeholder="mis. Unit A">
+    <label for="pw">Pengawas</label><input id="pw" placeholder="Nama pengawas">
+    <div class="err" id="err"></div>
+    <div class="btns"><button class="g" id="cancel">Batal</button><button id="add">Simpan</button></div>
+  </div>
+</div>
+
+<div class="ov" id="ov2"><div class="card md"><h2>Hapus IPB?</h2><p class="meta" id="delmsg"></p><div class="btns"><button class="g" id="delno">Batal</button><button class="dng" id="delyes">Hapus</button></div></div></div>
+<script>
+var KEY="ekspedisi_ipb_v1",data=[],filter="all",q="",fm="all",fy="all";
+var MON=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+var ST=[["Terdaftar","b0"],["Keluar","b1"],["Dikembalikan","b2"]];
+var SB_URL="https://alnmjxyyfhkytwkwzpon.supabase.co",SB_KEY="sb_publishable_DaL5YRZ7cIVN52tEiz3REw_u2s9Pu2g";
+function api(method,path,body,extra){
+  var h={apikey:SB_KEY,"Content-Type":"application/json"};
+  if(extra)for(var k in extra)h[k]=extra[k];
+  return fetch(SB_URL+"/rest/v1/ipb_ekspedisi"+path,{method:method,headers:h,body:body?JSON.stringify(body):undefined}).then(function(r){
+    if(!r.ok)return r.text().then(function(t){var e=new Error(t);e.status=r.status;throw e});
+    return r.status===204?null:r.json()})}
+function fromRow(r){return{id:r.id,no:r.no_ipb,unit:r.unit,pw:r.pengawas,date:r.tanggal,s:r.status,created:Date.parse(r.dibuat),out:r.keluar_at?Date.parse(r.keluar_at):null,back:r.kembali_at?Date.parse(r.kembali_at):null}}
+function iso(t){return t?new Date(t).toISOString():null}
+function net(t,bad){var n=document.getElementById("net");n.textContent=t||"";n.style.color=bad?"var(--dan)":"var(--mut)"}
+function load(){return api("GET","?select=*&order=tanggal.desc,dibuat.desc").then(function(rows){data=rows.map(fromRow);net("");render()}).catch(function(){net("Gagal memuat data dari Supabase. Periksa koneksi.",true)})}
+function persist(d){return api("PATCH","?id=eq."+d.id,{status:d.s,keluar_at:iso(d.out),kembali_at:iso(d.back)}).catch(function(){net("Gagal menyimpan perubahan. Muat ulang halaman.",true);load()})}
+function rm(d){return api("DELETE","?id=eq."+d.id).catch(function(){net("Gagal menghapus. Muat ulang halaman.",true);load()})}
+function p2(n){return(n<10?"0":"")+n}
+function ymd(t){var x=new Date(t);return x.getFullYear()+"-"+p2(x.getMonth()+1)+"-"+p2(x.getDate())}
+function dd(d){return d.date||ymd(d.created)}
+function fdate(s){var a=s.split("-");return +a[2]+" "+MON[+a[1]-1].slice(0,3)+" "+a[0]}
+function fmt(t){return new Date(t).toLocaleString("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function $(i){return document.getElementById(i)}
+
+function buildFilters(){
+  var m=$("fm");m.innerHTML="";
+  var o=el("option",null,"Semua bulan");o.value="all";m.appendChild(o);
+  MON.forEach(function(n,i){var x=el("option",null,n);x.value=String(i+1);m.appendChild(x)});
+  m.value=fm;
+  var ys={};ys[new Date().getFullYear()]=1;
+  data.forEach(function(d){ys[dd(d).split("-")[0]]=1});
+  var y=$("fy");y.innerHTML="";
+  var o2=el("option",null,"Semua tahun");o2.value="all";y.appendChild(o2);
+  Object.keys(ys).sort().reverse().forEach(function(k){var x=el("option",null,k);x.value=k;y.appendChild(x)});
+  y.value=fy;
+}
+
+function render(){
+  buildFilters();
+  var base=data.filter(function(d){
+    var a=dd(d).split("-");
+    if(fy!=="all"&&a[0]!==fy)return false;
+    if(fm!=="all"&&+a[1]!==+fm)return false;
+    return !q||(d.no+" "+d.unit+" "+d.pw).toLowerCase().indexOf(q)>-1});
+  var tabs=$("tabs");tabs.innerHTML="";
+  [["all","Semua"],["1","Sedang keluar"],["2","Sudah kembali"]].forEach(function(t){
+    var n=base.filter(function(d){return t[0]==="all"||String(d.s)===t[0]}).length;
+    var b=el("button",filter===t[0]?"on":"");b.appendChild(el("b",null,String(n)));b.appendChild(document.createTextNode(t[1]));
+    b.onclick=function(){filter=t[0];render()};tabs.appendChild(b)});
+  var list=$("list");list.innerHTML="";
+  var rows=base.filter(function(d){return filter==="all"||String(d.s)===filter});
+  rows.sort(function(a,b){var x=dd(a),y=dd(b);return x<y?1:x>y?-1:b.created-a.created});
+  if(!rows.length){list.appendChild(el("div","empty","Belum ada data."));return}
+  var gk=function(d){var a=dd(d).split("-");return MON[+a[1]-1]+" "+a[0]},cnt={},last="";
+  rows.forEach(function(d){var k=gk(d);cnt[k]=(cnt[k]||0)+1});
+  rows.forEach(function(d){
+    var g=gk(d);
+    if(g!==last){last=g;list.appendChild(el("div","gh",g+" ("+cnt[g]+")"))}
+    var c=el("div","card item c"+d.s),top=el("div","top");
+    top.appendChild(el("span","no",d.no));
+    top.appendChild(el("span","badge "+ST[d.s][1],ST[d.s][0]));
+    c.appendChild(top);
+    c.appendChild(el("div","meta","Tanggal: "+fdate(dd(d))));
+    c.appendChild(el("div","meta","Unit: "+d.unit+" · Pengawas: "+d.pw));
+    if(d.out)c.appendChild(el("div","meta","Keluar: "+fmt(d.out)));
+    if(d.back)c.appendChild(el("div","meta","Kembali: "+fmt(d.back)));
+    var a=el("div","act");
+    if(d.s===0){var o=el("button","s out","Keluarkan");o.onclick=function(){d.s=1;d.out=Date.now();persist(d);render()};a.appendChild(o);var k=el("button","s dir","Langsung kembalikan");k.onclick=function(){d.s=2;d.out=d.out||Date.now();d.back=Date.now();persist(d);render()};a.appendChild(k)}
+    if(d.s===1){var r=el("button","s ret","Kembalikan");r.onclick=function(){d.s=2;d.back=Date.now();persist(d);render()};a.appendChild(r)}
+    var x=el("button","d","Hapus");x.onclick=function(){askDel(d)};a.appendChild(x);
+    c.appendChild(a);list.appendChild(c)});
+}
+
+function openM(){$("tgl").value=ymd(Date.now());$("err").textContent="";$("ov").classList.add("show")}
+function closeM(){$("ov").classList.remove("show")}
+$("open").onclick=openM;$("cancel").onclick=closeM;
+$("ov").onclick=function(e){if(e.target===this)closeM()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeM()});
+$("q").oninput=function(e){q=e.target.value.trim().toLowerCase();render()};
+$("fm").onchange=function(e){fm=e.target.value;render()};
+$("fy").onchange=function(e){fy=e.target.value;render()};
+$("add").onclick=function(){
+  var n=$("no").value.trim(),u=$("unit").value.trim(),p=$("pw").value.trim(),t=$("tgl").value,err=$("err");
+  if(!n||!u||!p||!t){err.textContent="No. IPB, tanggal, unit, dan pengawas wajib diisi.";return}
+  if(data.some(function(d){return d.no.toLowerCase()===n.toLowerCase()})){err.textContent="No. IPB sudah terdaftar.";return}
+  var btn=$("add");btn.disabled=true;btn.textContent="Menyimpan…";
+  api("POST","",{no_ipb:n,tanggal:t,unit:u,pengawas:p},{Prefer:"return=representation"}).then(function(r){
+    data.push(fromRow(r[0]));$("no").value=$("unit").value=$("pw").value="";
+    filter="all";fm="all";fy="all";closeM();render()
+  }).catch(function(e){err.textContent=e.status===409?"No. IPB sudah terdaftar.":"Gagal menyimpan ke Supabase."}).then(function(){btn.disabled=false;btn.textContent="Simpan"})};
+var delTarget=null;
+function askDel(d){delTarget=d;$("delmsg").textContent="IPB "+d.no+" akan dihapus permanen.";$("ov2").classList.add("show")}
+$("delno").onclick=function(){$("ov2").classList.remove("show");delTarget=null};
+$("delyes").onclick=function(){if(delTarget){var dt=delTarget;data=data.filter(function(i){return i!==dt});rm(dt)}$("ov2").classList.remove("show");delTarget=null;render()};
+$("ov2").onclick=function(e){if(e.target===this){this.classList.remove("show");delTarget=null}};
+function curTheme(){return document.documentElement.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);$("theme").textContent=t==="dark"?"☀️":"🌙"}
+try{var sv=localStorage.getItem("ipb_theme");if(sv)document.documentElement.setAttribute("data-theme",sv)}catch(e){}
+applyTheme(curTheme());
+$("theme").onclick=function(){var t=curTheme()==="dark"?"light":"dark";applyTheme(t);try{localStorage.setItem("ipb_theme",t)}catch(e){}};
+render();net("Memuat data…");load();
+document.addEventListener("visibilitychange",function(){if(!document.hidden)load()});
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
