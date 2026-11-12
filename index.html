@@ -8,8 +8,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ekspedisi IPB">
-<link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Ekspedisi IPB</title>
 <style>
 :root{--bg1:#e4ecff;--bg2:#f4e6ff;--g1:rgba(122,168,255,.55);--g2:rgba(255,154,213,.45);--glass:rgba(255,255,255,.66);--gb:rgba(255,255,255,.85);--sh:0 4px 16px rgba(40,60,120,.10);--tx:#14181f;--mut:#566071;--opt:#fff;--pri:#3b6ef5;--pri2:#7a4df0;--ok:#0f7a55;--okbg:rgba(34,197,130,.2);--warn:#9a5a00;--warnbg:rgba(250,176,5,.24);--idle:#475569;--idlebg:rgba(100,116,139,.16);--dan:#d32f2f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -73,6 +73,7 @@ button.dng{background:linear-gradient(135deg,#ef4444,#b91c1c)}
 <body>
 <main>
 <div class="hd"><div class="brand"><div class="logo">📦</div><div><h1>Ekspedisi IPB</h1><div class="sub">Catat keluar &amp; kembali</div></div></div><div class="hb"><button class="g ic" id="theme" aria-label="Ganti tema">🌙</button><button id="open">+ Tambah</button></div></div>
+<div id="inst" class="card" style="display:none;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px"><span class="meta">Pasang sebagai aplikasi di layar utama</span><button class="s" id="instbtn">Pasang</button></div>
 <div class="meta" id="net" style="margin:0 4px 8px"></div>
 <div class="flt">
   <input id="q" placeholder="Cari no. IPB, unit, atau pengawas…">
@@ -199,6 +200,10 @@ applyTheme(curTheme());
 $("theme").onclick=function(){var t=curTheme()==="dark"?"light":"dark";applyTheme(t);try{localStorage.setItem("ipb_theme",t)}catch(e){}};
 render();net("Memuat data…");load();
 document.addEventListener("visibilitychange",function(){if(!document.hidden)load()});
+var dp=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;$("inst").style.display="flex"});
+$("instbtn").onclick=function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;$("inst").style.display="none"})};
+window.addEventListener("appinstalled",function(){$("inst").style.display="none"});
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
 </body>
